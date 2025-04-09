@@ -1,0 +1,59 @@
+body {
+    background: linear-gradient(to right, #4facfe, #ff6bcb);
+    font-family: 'Poppins', sans-serif;
+    background-size: 200% 200%;
+    transition: 0.5s, color 0.3s;
+    animation: gradientAnimation 8s infinite ease-in-out;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.nav-link {
+    transition: all 0.3s ease-in-out;
+}
+.nav-link:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.profile-modal input, .profile-modal textarea, .profile-modal select {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none;
+}
+
+#chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.my-message {
+    align-self: flex-end;
+    background-color: #3b82f6; /* Blue */
+    color: white;
+    text-align: right;
+}
+
+.other-message {
+    align-self: flex-start;
+    background-color: #f1f1f1; /* Light Gray */
+    color: black;
+    text-align: left;
+}
+
+
+@media (max-width:700px) {
+    navbar{
+        flex: wrap;
+        gap:20px;
+        margin:20px;
+        font-size: 10px;
+        transition: 0.5s, color 0.3s;
+    }
+    
+
+}
