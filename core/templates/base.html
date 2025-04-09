@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>Django Chat</title>
+    {% endblock title %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'static/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body class="text-white">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 shadow-md px-5 py-3 w-100">
+        <div class="flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold text-pink-400 hover:text-blue-400 transition-all duration-300">
+                DjangoChats
+            </a>
+            <button id="menu-toggle" class="text-white md:hidden">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <div class="hidden md:flex items-center space-x-4 transition duration-300">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 flex items-center space-x-2">
+                        <i class="fa-solid fa-user"></i> <span>{{ user.username }}</span>
+                    </a>
+                    <a href="{% url 'user_list' %}" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">
+                        Active Users
+                    </a>
+                    <a href="{% url 'rooms' %}" class="px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-600">
+                        Chat Rooms
+                    </a>
+                    <a href="{% url 'logout' %}" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'signup' %}" class="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600">
+                        Sign Up
+                    </a>
+                    <a href="{% url 'login' %}" class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600">
+                        Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div id="mobile-menu" class="mt-3 hidden md:hidden flex-col space-y-2">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="block px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 flex items-center space-x-2">
+                    <i class="fa-solid fa-user"></i> <span>{{ user.username }}</span>
+                </a>
+                <a href="{% url 'user_list' %}" class="block px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">
+                    Active Users
+                </a>
+                <a href="{% url 'rooms' %}" class="block px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-600">
+                    Chat Rooms
+                </a>
+                <a href="{% url 'logout' %}" class="block px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700">
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'signup' %}" class="block px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600">
+                    Sign Up
+                </a>
+                <a href="{% url 'login' %}" class="block px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600">
+                    Login
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    {% block content %}
+    <div class="flex flex-col items-center justify-center mt-64 mb-64 px-6 text-center">
+        <h1 class="text-4xl lg:text-6xl font-extrabold drop-shadow-lg">Welcome to DjangoChat</h1>
+        <p class="text-lg mt-4 opacity-90">Real-time chat application built with Django and WebSockets.</p>
+        <p class="mt-2">Developed by - <span class="text-pink-200 font-semibold">ISHU ANAND MALVIYA</span></p>
+    </div>
+    <div class="w-full bg-white text-black p-32 ">
+        <div class="max-w-4xl mx-auto mt-64 mb-64 text-center px-4">
+            <h2 class="text-3xl font-bold mb-4">Why DjangoChat?</h2>
+            <p class="text-black-400 text-lg">This app offers seamless, private, and secure chat using modern tech like Django Channels and WebSockets. Built for speed and clarity, it supports real-time messaging, active user listings, and private rooms — everything you expect from a modern chat tool.</p>
+        </div>
+    </div>
+    
+
+    <div class="mt-20 max-w-xl mx-auto bg-white text-black rounded-xl shadow-xl p-6">
+        <h3 class="text-2xl font-semibold text-center mb-4">Contact Us</h3>
+        <form method="post" action="#" class="space-y-4">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required class="w-full p-3 border border-gray-300 rounded-lg">
+            <input type="email" name="email" placeholder="Your Email" required class="w-full p-3 border border-gray-300 rounded-lg">
+            <textarea name="message" rows="4" placeholder="Your Message" required class="w-full p-3 border border-gray-300 rounded-lg"></textarea>
+            <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Send Message</button>
+        </form>
+    </div>
+
+    <footer class="text-center mt-20 py-6 text-sm bg-black/20 text-white/80">
+        &copy; 2025 DjangoChat. Built with ❤️ using Django & TailwindCSS.
+    </footer>
+    {% endblock content %}
+
+    {% block scripts %}
+    {% endblock scripts %}
+</body>
+</html>

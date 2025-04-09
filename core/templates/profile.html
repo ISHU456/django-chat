@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-3xl mx-auto mt-10">
+    <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+        <img src="{{ profile.profile_pic.url }}" class="w-32 h-32 mx-auto rounded-full shadow-md object-contain" alt="User">
+        <br>
+        <h1 class="text-black">{{user.username}}</h1>
+        <p class="text-gray-600 mt-2">{{ profile.bio }}</p>
+        <p class="text-gray-700 mt-2"><strong>Location:</strong> {{ profile.location }}</p>
+        <p class="text-gray-700 mt-2"><strong>Skills:</strong> {{ profile.skills }}</p>
+        <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            data-modal-target="editProfileModal">
+            Edit Profile
+        </button>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
+        <div class="flex justify-between items-center">
+            <h5 class="text-lg font-semibold">Edit Profile</h5>
+            <button class="text-gray-600 hover:text-gray-800" onclick="toggleModal('editProfileModal')">✖</button>
+        </div>
+        <form method="POST" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            <div class="space-y-4">
+                {% for field in form %}
+                    <div>
+                        <label class="block text-gray-700 font-medium">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="mt-4 w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function toggleModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.toggle('hidden');
+}
+document.querySelector('[data-modal-target="editProfileModal"]').addEventListener('click', () => {
+    toggleModal('editProfileModal');
+});
+</script>
+
+{% endblock %}

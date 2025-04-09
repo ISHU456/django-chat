@@ -1,0 +1,51 @@
+pip install social-auth-app-django
+
+INSTALLED_APPS = [
+    # Other apps...
+    'social_django',  # Add this for social authentication
+]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',  # Default auth backend
+)
+
+3️⃣ Set Up Google OAuth Credentials
+Go to Google Cloud Console
+Create a new project (if not already created)
+Go to "APIs & Services" → "Credentials"
+Create OAuth Client ID:
+Choose "Web Application"
+Add Authorized Redirect URIs:
+http://127.0.0.1:8003/auth/complete/google/
+
+
+ Add Google Credentials in settings.py
+python
+Copy
+Edit
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'your-client-id.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your-client-secret'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
+Add URLs in urls.py
+Update your urls.py to include authentication routes:
+from django.urls import path, include
+
+urlpatterns = [
+    path('auth/', include('social_django.urls', namespace='social')),  # Google Auth URLs
+]
+
+
+Add Google Login Button in Your Template
+Modify your login template (login.html):
+
+<a href="{% url 'social:begin' 'google-oauth2' %}" class="py-3 px-4 rounded-xl text-white bg-blue-600 hover:bg-blue-800 duration-300">
+    Login with Google
+</a>
+
+https://forms.gle/LSnHfFLGdWezbWG19

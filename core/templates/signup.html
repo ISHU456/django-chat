@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-10 lg:p-5 text-center">
+    <h1 class="text-3xl lg:text-6xl text-white">SIGNUP</h1>
+</div>
+
+<div class="flex justify-center">
+    <form action="." method="POST" class="w-full max-w-lg px-4">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="username" class="block text-lg font-medium text-gray-300 mb-2">Username</label>
+            <input type="text" name="username" 
+                class="w-full lg:w-96 px-4 py-3 rounded-xl bg-white text-black text-lg border border-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                placeholder="Enter Username">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="block text-lg font-medium text-gray-300 mb-2">Email</label>
+            <input type="email" name="email" 
+                class="w-full lg:w-96 px-4 py-3 rounded-xl bg-white text-black text-lg border border-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                placeholder="Enter Email">
+        </div>
+
+        <div class="mb-3">
+            <label for="password1" class="block text-lg font-medium text-gray-300 mb-2">Password</label>
+            <input type="password" name="password1" 
+                class="w-full lg:w-96 px-4 py-3 rounded-xl bg-white text-black text-lg border border-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                placeholder="Enter Password">
+        </div>
+
+        <div class="mb-3">
+            <label for="password2" class="block text-lg font-medium text-gray-300 mb-2">Confirm Password</label>
+            <input type="password" name="password2" 
+                class="w-full lg:w-96 px-4 py-3 rounded-xl bg-white text-black text-lg border border-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                placeholder="Confirm Password">
+        </div>
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="text-red-500 text-sm">{{ error|escape }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <input type="submit" class="w-full lg:w-96 py-3 text-lg rounded-xl text-white bg-green-600 hover:bg-green-800 duration-300 cursor-pointer" value="SIGNUP">
+
+        <a href="{% url "home" %}" class="block text-center mt-2 text-lg text-white bg-red-400 py-3 w-full lg:w-96 rounded-xl hover:bg-red-500 duration-300">
+            BACK TO HOME
+        </a>
+    </form>
+</div>
+
+{% for message in messages %}
+    <p class="text-center text-green-400 mt-4">{{ message }}</p>
+{% endfor %}
+
+{% endblock content %}
